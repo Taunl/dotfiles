@@ -1,0 +1,133 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                           Main                           │
+# ╰──────────────────────────────────────────────────────────╯
+#test
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                         History                          │
+
+# 设置重复行与空格开始行不放入历史，设置每次的 shell 历史为追加，而非覆盖，设置单次 shell 最大历史1000条，文件保存最多2000条。
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# every time when open shell, append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# │                         History                          │
+# ╰──────────────────────────────────────────────────────────╯
+
+# check the window size after each command end, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                       Variables                          │
+# ╰──────────────────────────────────────────────────────────╯
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export EDITOR="nvim"
+export VISUAL=$EDITOR
+export GIT_EDITOR=$EDITOR
+
+# MANPAGER 是 man 手册的分页器，默认情况下 man 使用 less 与 more 来作为分页器
+# 使用nvim 来打开 man 手册
+export MANPAGER='nvim +Man!'
+
+# 使用应用来输入 sudo 密码
+[ -x /usr/bin/ssh-askpass ] && export SUDO_ASKPASS="/usr/bin/ssh-askpass"
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                       Customize                          │
+# ╰──────────────────────────────────────────────────────────╯
+
+# echo -e "\033[6 q" # 光标变竖线
+# set -o vi
+
+# 加载 ~/sh.d/ 中的文件 aliaes, completion, prompt, function 等
+# for file in ~/sh.d/*; do
+#   [ -f $file ] && . $file
+# done
+
+[ -f ~/sh.d/aliases ] && . ~/sh.d/aliases
+[ -f ~/sh.d/completes ] && . ~/sh.d/completes
+[ -f ~/sh.d/functions ] && . ~/sh.d/functions
+
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# bash integration of cli tools
+[ -x "$(command -v direnv)" ] && eval "$(direnv hook bash)"
+[ -x "$(command -v starship)" ] && eval "$(starship init bash)"
+[ -x "$(command -v zoxide)" ] && eval "$(zoxide init --cmd cd bash)"
+[ -x "$(command -v bat)" ] && export BAT_THEME="Catppuccin-mocha"
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                        ripgrep                           │
+# ╰──────────────────────────────────────────────────────────╯
+
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgreprc
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                          fzf                             │
+# ╰──────────────────────────────────────────────────────────╯
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# 默认使用系统自带的 find 命令, 比较慢。
+export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS='--preview "head {}"' # disable FZF preview
+
+# export FZF_DEFAULT_OPTS="--style full \
+#     --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+# alt+c 的转目录 变成 alt+d 的转目录
+# bind "$(bind -s | command grep '^"\\ec"' | sed 's/ec/ed/')" [[ $- =~ i ]] && bind '"\ec": nop'
+
+# fzf --preview "bat --color=always --theme=Catppuccin-mocha {}"
+
+# ╭──────────────────────────────────────────────────────────╮
+# │                   conda initialize                       │
+# ╰──────────────────────────────────────────────────────────╯
+
+# if [ -f "/home/lunat/miniconda3/etc/profile.d/conda.sh" ]; then
+# . "/home/lunat/miniconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
+# else
+# export PATH="/home/lunat/miniconda3/bin:$PATH"  # commented out by conda initialize
+# fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/opt/miniconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
+# if [ $? -eq 0 ]; then
+#   eval "$__conda_setup"
+# else
+#   if [ -f "/opt/miniconda3/etc/profile.d/conda.sh" ]; then
+#     . "/opt/miniconda3/etc/profile.d/conda.sh"
+#   else
+#     export PATH="/opt/miniconda3/bin:$PATH"
+#   fi
+# fi
+# unset __conda_setup
+# <<< conda initialize <<<
