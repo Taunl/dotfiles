@@ -1,0 +1,10 @@
+Host github.com # 匹配别名: 只有当你在终端执行 ssh git@github.com 匹配到了这个 Host 才会应用以下配置，也可以设置成 gh，这样 ssh gh 也能应用这个
+    HostName github.com # 实际主机名：你将 Host 设成 gh，会来找真正的 HostName，然后用 TCP 去连接
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+    # IdentitiesOnly yes   # 关键参数：强制只使用这里指定的密钥，忽略其他所有
+    # 接下来的配置是为了让每次的 ssh 连接能持续 10m钟，不必每次都连
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 10m
+

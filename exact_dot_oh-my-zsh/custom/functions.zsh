@@ -1,0 +1,52 @@
+# 设置代理
+function proxy() {
+  local proxy_url="127.0.0.1:7890" # 根据实际情况修改代理地址
+  case "$1" in
+  "on")
+    # 设置HTTP/HTTPS代理
+    export http_proxy="$proxy_url"
+    export https_proxy="$proxy_url"
+    export ftp_proxy="$proxy_url"
+    # 同时设置大写版本（某些程序使用大写变量）
+    export ALL_PROXY="$proxy_url"
+    export HTTP_PROXY="$proxy_url"
+    export HTTPS_PROXY="$proxy_url"
+    echo "Proxy enabled"
+    ;;
+  "off")
+    # 取消代理设置
+    unset http_proxy
+    unset https_proxy
+    unset ftp_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset ALL_PROXY
+    echo "Proxy disabled"
+    ;;
+  *)
+    echo "Usage: proxy {on|off}"
+    echo "Current proxy status:"
+    echo "  http_proxy  = ${http_proxy:-unset}"
+    echo "  https_proxy = ${https_proxy:-unset}"
+    return 1
+    ;;
+  esac
+}
+
+# 更换 neovim 配置
+function vc() {
+  mv ~/.config/nvim{,.mid}
+  mv ~/.local/share/nvim{,.mid}
+  mv ~/.local/state/nvim{,.mid}
+  mv ~/.cache/nvim{,.mid}
+
+  mv ~/.config/nvim{.bak,}
+  mv ~/.local/share/nvim{.bak,}
+  mv ~/.local/state/nvim{.bak,}
+  mv ~/.cache/nvim{.bak,}
+
+  mv ~/.config/nvim{.mid,.bak}
+  mv ~/.local/share/nvim{.mid,.bak}
+  mv ~/.local/state/nvim{.mid,.bak}
+  mv ~/.cache/nvim{.mid,.bak}
+}
