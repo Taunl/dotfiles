@@ -1,0 +1,53 @@
+# readline configure file
+
+
+# case insensitive tab completion
+set completion-ignore-case On
+
+# show all available completions
+set show-all-if-ambiguous off
+
+# make the Tab key enable cyclic matching
+set menu-complete-display-prefix on
+TAB:menu-complete
+
+# make symbolic links pointings to dir have a "/" when using Tab for completion
+set mark-symlinked-directories on
+
+# 启用 Alt 键作为 Meta 键
+# set meta-flag on
+# set input-meta on
+# 禁止将 Meta 字符转换为转义序列
+# set convert-meta off
+# 绑定 Alt+B 到 backward-word（移动到单词开头）
+
+# set key map
+#
+#
+# Control-v:"v \C-t"
+# Control-u:clear-screen
+
+# delete filepath by folder layer
+Control-w: unix-filename-rubout
+
+# match history by starting string
+# Control-p: history-search-backward
+# Control-n: history-search-forward
+# "\C-w": unix-filename-rubout
+
+# Control-b: beginning-of-line
+# Control-a: ""
+
+# Alt-h and Alt-l go backward and forward by word in bash prompt
+# "\eh": backward-word
+# "\el": forward-word
+# "\e": ""
+
+# $if mode=emacs
+#   # 禁用 Esc 作为 Meta 键
+#   "\e": ""
+# $endif
+
+# $if mode=vi
+#   # Vi 模式下 Esc 保留切换功能
+# $endif

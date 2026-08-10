@@ -1,3 +1,6 @@
+{{- if eq .chezmoi.os "linux" -}}
+
+
 # 设置代理
 function proxy() {
   local proxy_url="127.0.0.1:7890" # 根据实际情况修改代理地址
@@ -32,6 +35,11 @@ function proxy() {
     ;;
   esac
 }
+{{- else if eq .chezmoi.os "darwin" -}}
+
+{{- else if eq .chezmoi.os "windows" -}}
+
+{{- end -}}
 
 # 更换 neovim 配置
 function vc() {
