@@ -68,7 +68,7 @@ alias vd='nvim +"cd ~/dotfiles/ | lua Snacks.config.picker.sources={explorer={hi
 # | Lazy load ultisnips' +'UltiSnipsAddFiletypes config'"
 alias vt="nvim ~/.tmux.conf"
 alias vp="nvim ~/Desktop/Ongoing.md"
-alias vr="nvim ~/.local/share/fcitx5/rime/wubi86_jidian_user.dict.yaml"
+alias vr="nvim ~/.local/share/chezmoi/rime/wubi86_jidian_user.dict.yaml"
 
 # ╭──────────────────────────────────────────────────────────╮
 # │                        utilities                         │

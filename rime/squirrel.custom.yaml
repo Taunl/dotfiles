@@ -1,0 +1,4 @@
+patch:
+  # style/color_scheme: native
+  style/label_font_point: 12
+  style/candidate_list_layout: linear  # stacked | linear | tabled

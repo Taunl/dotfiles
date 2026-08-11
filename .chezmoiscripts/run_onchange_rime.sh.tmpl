@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+SRC_DIR="{{.chezmoi.sourceDir}}/rime"
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+# 鼠须管配置目录, sha3
+DST_DIR="$HOME/Library/Rime"  
+
+{{ else if eq .chezmoi.os "linux" -}}
+
+DST_DIR="$HOME/.local/share/fcitx5/rime"  
+
+{{ else if eq .chezmoi.os "windows" -}}
+
+# 小狼毫配置目录
+DST_DIR="{{ .chezmoi.homeDir }}/AppData/Roaming/Rime" 
+
+{{ end -}}
+
+
+# 为家目录下 rime 的所有文件（含隐藏文件）创建软链接到 macOS Rime 配置目录
+# 若目标已存在且为文件/链接，则自动替换为软链接；若为目录则跳过（需手动处理）
+
+
+# 检查源目录
+if [ ! -d "$SRC_DIR" ]; then
+    echo "ERROR: Rime source directory '$SRC_DIR' does not exist" >&2
+    exit 1
+fi
+
+# 创建目标目录
+mkdir -p "$DST_DIR"
+
+# 开启隐藏文件匹配及空匹配处理
+shopt -s dotglob nullglob
+
+for item in "$SRC_DIR"/*; do
+    filename=$(basename "$item")
+    target="$DST_DIR/$filename"
+
+    # 如果目标 已是 链接，则跳过
+    if [ -L "$target" ]; then continue; fi
+
+    # 如果目标存在，则删除
+    if [ -e "$target" ]; then rm -rf "$target"; fi
+
+    # 创建软链接（绝对路径）
+    ln -s "$item" "$target"
+    echo "已创建: $target -> $item"
+done
+
+echo "rime 配置更新完成！请重新部署 Rime（或重启输入法）使配置生效。"
