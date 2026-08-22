@@ -1,0 +1,72 @@
+#extends tex
+#snippet $ "行内数学" iA
+#\$\$${1:表达式}\$\$
+#endsnippet
+
+snippet b "bold" i
+**$1**
+endsnippet
+
+snippet i "italic" i
+*$1*
+endsnippet
+
+snippet today "today time" A
+Today is the `date +%d.%m.%y`.
+endsnippet
+
+snippet indent
+Indent is: `!v indent(".")`.
+endsnippet
+
+snippet wow
+${1:Text}`!p snip.rv = (75-2*len(t[1]))*' '+t[1].upper()`
+endsnippet
+
+snippet "be(gin)?( (\S+))?" "begin{} / end{}" br
+\begin{${1:`!p
+snip.rv = match.group(3) if match.group(2) is not None else "something"`}}
+    ${2:${VISUAL}}
+\end{$1}$0
+endsnippet
+
+snippet a
+<a href="${1:http://www.${2:example.com}}"
+    $0
+</a>
+endsnippet
+
+snippet ( "()" bA
+(${VISUAL})
+endsnippet
+
+snippet dm "Math" wA
+\[
+${VISUAL}
+.\] $0
+endsnippet
+
+#snippet title "Titlelize in the Transformation"
+#${1:a title}
+#${1/\w+\s*/\u$0/g}
+#endsnippet
+
+snippet printf
+printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+endsnippet
+
+global !p
+def two_chars_to_gg(snip):
+    # 获取当前占位符文本（假设只有两个字符）
+    text = snip.buffer[snip.line][snip.column:snip.column+2]
+    # 将这两个字符替换为 'gg'
+    snip.buffer[snip.line] = snip.buffer[snip.line][:snip.column] + 'gg' + snip.buffer[snip.line][snip.column+2:]
+    # 移动光标到替换后的 'gg' 之后
+    snip.cursor.set(snip.line, snip.column + 2)
+endglobal
+
+snippet cc "Two chars placeholder then gg" w
+${1:__}$0`!p
+snip.jump_text = two_chars_to_gg
+`
+endsnippet

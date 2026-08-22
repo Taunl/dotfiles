@@ -1,0 +1,28 @@
+global !p
+import unicodedata
+
+def fullwidth_len(s):
+  total = 0
+  for ch in s:
+    # 汉字 或 全角字符（如全角逗号、句号、字母）
+    if ('\u4e00' <= ch <= '\u9fff') or unicodedata.east_asian_width(ch) in ('F', 'W'):
+      total += 2
+    else:
+      total += 1
+  return total
+
+def title_left(inp):
+  left = (58 - fullwidth_len(inp)) // 2
+  return '│' + left * ' '
+
+def title_right(inp):
+  right = (58 - fullwidth_len(inp) + 1) // 2 
+  return right * ' ' + '│' # + str(fullwidth_len(inp))
+endglobal
+
+snippet tt "title" b
+${1:-- }╭──────────────────────────────────────────────────────────╮
+$1`!p snip.rv = title_left(t[2])`${2:title}`!p snip.rv = title_right(t[2])`
+$1╰──────────────────────────────────────────────────────────╯
+$0
+endsnippet

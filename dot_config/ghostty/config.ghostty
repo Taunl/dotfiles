@@ -14,10 +14,14 @@
 ## ╰─────────────────────────────────────────────────────────╯
 
 
-font-family = "FiraCode Nerd Font"
+## ===
+font-family = "FiraCode Nerd Font Mono"
+# font-family = "Lantinghei TC"
 # 这个中文字体有粗体
+
+# on mac
+# font-family = "source Han Serif CN"
 # font-family = "Noto Serif CJK SC"
-font-family = "source Han Serif CN"
 font-size = 15
 # font-thicken = true
 # font-synthetic-style = true
@@ -25,7 +29,7 @@ font-size = 15
 
 
 ## 应是行高增加 5%
-adjust-cell-height = 5% 
+adjust-cell-height = 10% 
 
 # --- Theme and Colors ---
 theme = Kanagawa Wave

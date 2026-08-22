@@ -1,0 +1,36 @@
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+--
+-- Add any additional autocmds here
+-- with `vim.api.nvim_create_autocmd`
+--
+-- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
+-- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- 为了让 FocusGained（以及 FocusLost）在终端中正常工作，终端模拟器必须支持发送 FocusIn (CSI I) 和 FocusOut (CSI O) 事件，通常通过 DECSET 1004 启用。
+-- vim.api.nvim_create_autocmd("FocusGained", {
+--   callback = function()
+--     -- 检查当前模式是否为 normal 模式
+--     local current_mode = vim.api.nvim_get_mode()
+--     if current_mode.mode == "n" then
+--       os.execute("fcitx5-remote -s keyboard-us")
+--     end
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd("FocusLost", {
+--   callback = function()
+--     -- 检查当前模式是否为 normal 模式
+--     local current_mode = vim.api.nvim_get_mode()
+--     if current_mode.mode == "n" then
+--       os.execute("fcitx5-remote -s rime")
+--     end
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd("InsertEnter", {
+--   callback = function()
+--     os.execute("fcitx5-remote -s rime")
+--   end,
+-- })
+--

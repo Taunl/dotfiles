@@ -115,7 +115,7 @@ source $ZSH/oh-my-zsh.sh
 [ -x "$(command -v zoxide)" ] && eval "$(zoxide init --cmd cd zsh)"
 
 # fzf plugins / fzf
-source <(fzf --zsh)
+[ -x "$(command -v fzf)" ] && source <(fzf --zsh)
 
 # [ -x "$(command -v starship)" ] && eval "$(starship init zsh)"
 

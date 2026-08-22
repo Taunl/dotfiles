@@ -2,6 +2,8 @@
 # │                       Variables                          │
 # ╰──────────────────────────────────────────────────────────╯
 
+export PATH="$HOME/.local/bin:$PATH"
+
 # use `set` to look all variables include env and local variables
 # use `env` to look all env variables
 
